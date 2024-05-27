@@ -2,6 +2,7 @@
 #define CLOSED_ADDRESSING_TABLE_HPP
 
 #include "HashTable.hpp"
+#include "SinglyLinkedList.hpp"
 
 template <typename T>
 class ClosedAddressingTable : public HashTable

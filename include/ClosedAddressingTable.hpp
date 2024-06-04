@@ -16,6 +16,8 @@ private:
 
 	std::vector<Bucket> bucketArray_;
 	size_t size_;
+	size_t elements_;
+	float loadFactor_;
 
 	size_t hash(int key, int type = 0) override;
 	size_t hash(float key, int type = 0) override;
@@ -29,10 +31,12 @@ public:
 
 	void insert(T1 key, T2 value) override;
 	void remove(T1 key) override;
+
+	size_t calculateLoadFactor();
 };
 
 template <typename T1, typename T2>
-ClosedAddressingTable<T1, T2>::ClosedAddressingTable(size_t size) : size_(size), bucketArray_(size)
+ClosedAddressingTable<T1, T2>::ClosedAddressingTable(size_t size) : size_(size), bucketArray_(size), elements_(0), loadFactor_(0.0)
 {
 	// In progress
 }
@@ -94,6 +98,8 @@ void ClosedAddressingTable<T1, T2>::insert(T1 key, T2 value)
 {
 	int index = hash(key);
 	bucketArray_[index].pushBack(key, value);
+
+	elements_++;
 }
 
 template <typename T1, typename T2>
@@ -103,6 +109,12 @@ void ClosedAddressingTable<T1, T2>::remove(T1 key)
 	int pairToRemove = bucketArray_[index].find(key);
 
 	bucketArray_[index].remove(pairToRemove);
+}
+
+template <typename T1, typename T2>
+size_t ClosedAddressingTable<T1, T2>::calculateLoadFactor()
+{
+	loadFactor_ = elements_ / size_;
 }
 
 #endif

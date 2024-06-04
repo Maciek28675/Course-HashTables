@@ -30,7 +30,7 @@ void measurePerformance(int repetitions, int dataSetSize)
 	//Generate values
 	std::vector<int> values = generateIntDataSet(dataSetSize);
 
-	ClosedAddressingTable<int, int> ht(dataSetSize);
+	ClosedAddressingTable<int, int> ht(dataSetSize * 2);
 
 	for (int i = 0; i < dataSetSize; i++)
 		ht.insert(keys[i], values[i]);
@@ -39,6 +39,8 @@ void measurePerformance(int repetitions, int dataSetSize)
 	double sum = 0.0;
 	double duration = 0.0;
 
+	srand(1);
+	int valueToInsert(rand() % 10000);
 	// measure time of operation
 	
 	for (int i = 0; i < repetitions; i++)
@@ -46,13 +48,13 @@ void measurePerformance(int repetitions, int dataSetSize)
 		Timer timer;
 
 		timer.start();
-		ht.insert(dataSetSize, 0);
+		ht.insert(valueToInsert, 0);
 		timer.stop();
 
 		duration = timer.getDuration();
 		sum += duration;
 
-		ht.remove(dataSetSize);
+		ht.remove(valueToInsert);
 	}
 
 	averageTime = sum / repetitions;

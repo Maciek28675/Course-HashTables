@@ -8,9 +8,13 @@
 #include "SinglyLinkedList.hpp"
 #include "AVL.hpp"
 #include "OpenAddressingHashTable.hpp"
+#include "Menu.hpp"
 
 int main()
 {
+	DataTypeMenu m1;
+	m1.run();
+	/*
 	CuckooHashingTable<int, int> ht(11);
 
 	ht.insert(20, 20);
@@ -25,6 +29,8 @@ int main()
 	ht.insert(39, 39);
 
 	ht.display();
+	*/
+
 	/*
 	measurePerformance(1000, 10000);
 	measurePerformance(1000, 20000);

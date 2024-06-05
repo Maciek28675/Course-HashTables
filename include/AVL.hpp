@@ -178,7 +178,7 @@ AVLNode<T1, T2>* AVL<T1, T2>::search(AVLNode<T1, T2>* node, T1 key) {
 template<typename T1, typename T2>
 AVL<T1, T2>::AVL(int size) {
 	for (int i = 0; i < size; i++) {
-		insert(i, T2());
+		insert(T1(), T2());
 	}
 }
 

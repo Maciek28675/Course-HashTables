@@ -3,8 +3,8 @@
 
 #include <iostream>
 #include "HashTable.hpp"
-#include "OpenAddressingTable.hpp"
-#include "ClosedAddressigTable.hpp"
+#include "OpenAddressingHashTable.hpp"
+#include "ClosedAddressingTable.hpp"
 #include "Avl.hpp"
 #include "CuckooHashingTable.hpp"
 
@@ -14,27 +14,34 @@ class Menu
 protected:
       int userChoice = 0;
 public:
-      virtual void display() const;
-      virtual void run();
+      virtual void display() const = 0;
+      virtual void run() = 0;
 };
 
 template <typename T1, typename T2>
 class HashTableMenu : public Menu
 {
 protected: 
-      std::unique_ptr<HashTable<T>> ht;
+      std::unique_ptr<HashTable<T1, T2>> ht;
       const int exitOption = 4;
 public:
       void display() const override;
       void run() override;
+
+      template <typename T1, typename T2> friend class OperationMenu;
 };
 
-template <typename T>
+template <typename T1, typename T2>
 class OperationMenu : public Menu
 {
 protected:
-      std:unique_ptr<HashTable<T>> ht;
+      std::unique_ptr<HashTable<T1, T2>> ht;
       const int exitOption = 3;
+public:
+    void display() const override;
+    void run() override;
+
+    template <typename T1, typename T2> friend class HashTableMenu;
 };
 
 class DataTypeMenu : public Menu
@@ -47,8 +54,8 @@ public:
 
 //Hash Table Menu
 
-template <typename T>
-void HashTableMenu<T>::display() const
+template <typename T1, typename T2>
+void HashTableMenu<T1, T2>::display() const
 {
       std::cout<<"------------------- Menu ------------------"<<std::endl;
       std::cout<<"1. Create an open addressing hash table"<<std::endl;
@@ -61,7 +68,7 @@ void HashTableMenu<T>::display() const
 }
 
 template <typename T1, typename T2>
-void HashTableMenu<T>::run()
+void HashTableMenu<T1, T2>::run()
 {
       while ( userChoice != exitOption)
         {
@@ -90,7 +97,10 @@ void HashTableMenu<T>::run()
 
                 case 3:
                   {
-                    ht = std::make_unique<AVL<T1,T2>>();
+                    int size;
+                    std::cout << "Enter the size of the hash table: ";
+                    std::cin >> size;
+                    ht = std::make_unique<AVL<T1,T2>>(size);
                       break;
                   }
 
@@ -111,7 +121,7 @@ void HashTableMenu<T>::run()
 
                 default:
                   {
-                    std::cerr<<"error: chosen option does not exist"<<std:endl;
+                    std::cerr << "error: chosen option does not exist" << std::endl;
                     exit(1);
                   }
               }
@@ -121,9 +131,9 @@ void HashTableMenu<T>::run()
         std::cin.get();
         std::cin.get();
         
-        system("clear");
+        system("cls");
 
-        OperationMenu<T> m1;
+        OperationMenu<T1, T2> m1;
         m1.ht = std::move(ht);
         m1.run();
     }             
@@ -133,8 +143,8 @@ void HashTableMenu<T>::run()
 
 //Operation Menu
 
-template <typename T>
-void OperationMenu<T>::display() const
+template <typename T1, typename T2>
+void OperationMenu<T1, T2>::display() const
 {
       std::cout<<"------ Operation Menu ------"<<std::endl;
       std::cout<<"1. Insert"<<std::endl;
@@ -144,10 +154,12 @@ void OperationMenu<T>::display() const
       std::cout<<"Choose an operation to perform: "<<std::endl;
 }
 
-template <typename T>
-void OperationMenu<T>::run()
+template <typename T1, typename T2>
+void OperationMenu<T1, T2>::run()
 {
-      T key, value;
+      T1 key;
+      T2 value;
+
       while (userChoice != exitOption)
       {
         this->display();
@@ -191,7 +203,7 @@ void OperationMenu<T>::run()
         std::cin.get();
         std::cin.get();
 
-        system("clear");
+        system("cls");
     }
 }
 
@@ -200,13 +212,13 @@ void OperationMenu<T>::run()
 
 void DataTypeMenu::display() const
 {
-    std::cout<<"----------"<<std::endl;
-    std::cout<<"1. Int"<<std::endl;
-    std::cout<<"2. Float"<<std::endl
-    std::cout<<"3. Char"<<std::endl
-    std::cout<<"4. String"<<std::endl
-    std::cout<<"----------"<<std::endl
-    std::cout<<"Choose a data type to use with hash table: "<<std::endl
+    std::cout << "----------" << std::endl;
+    std::cout << "1. Int" << std::endl;
+    std::cout << "2. Float" << std::endl;
+    std::cout << "3. Char" << std::endl;
+    std::cout << "4. String" << std::endl;
+    std::cout << "----------" << std::endl;
+    std::cout << "Choose a data type to use with hash table: " << std::endl;
 }
 
 void DataTypeMenu::run()
@@ -222,7 +234,7 @@ void DataTypeMenu::run()
         std::cin.get();
         std::cin.get();
 
-        system("clear");
+        system("cls");
 
         switch (userChoice)
         {

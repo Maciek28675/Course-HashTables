@@ -30,7 +30,7 @@ void measurePerformance(int repetitions, int dataSetSize)
 	//Generate values
 	std::vector<int> values = generateIntDataSet(dataSetSize);
 
-	CuckooHashingTable<int, int> ht(dataSetSize);
+	CuckooHashingTable<int, int> ht(dataSetSize * 2);
 
 	for (int i = 0; i < dataSetSize; i++)
 		ht.insert(keys[i], values[i]);

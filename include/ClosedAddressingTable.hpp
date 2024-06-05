@@ -19,10 +19,10 @@ private:
 	size_t elements_;
 	float loadFactor_;
 
-	size_t hash(int key, int type = 0) override;
-	size_t hash(float key, int type = 0) override;
-	size_t hash(char key, int type = 0) override;
-	size_t hash(std::string key, int type = 0) override;
+	size_t hash(int key, int type = 0);
+	size_t hash(float key, int type = 0);
+	size_t hash(char key, int type = 0);
+	size_t hash(std::string key, int type = 0);
 
 public:
 	ClosedAddressingTable(size_t size);

@@ -30,7 +30,7 @@ void measurePerformance(int repetitions, int dataSetSize)
 	//Generate values
 	std::vector<int> values = generateIntDataSet(dataSetSize);
 
-	ClosedAddressingTable<int, int> ht(dataSetSize * 2);
+	CuckooHashingTable<int, int> ht(dataSetSize);
 
 	for (int i = 0; i < dataSetSize; i++)
 		ht.insert(keys[i], values[i]);
@@ -39,22 +39,23 @@ void measurePerformance(int repetitions, int dataSetSize)
 	double sum = 0.0;
 	double duration = 0.0;
 
-	srand(1);
-	int valueToInsert(rand() % 10000);
+	//srand(time(NULL));
+	//int valueToInsert(rand() % 10000);
 	// measure time of operation
-	
+	ht.insert(-1, -1);
+
 	for (int i = 0; i < repetitions; i++)
 	{
 		Timer timer;
 
 		timer.start();
-		ht.insert(valueToInsert, 0);
+		ht.remove(-1);
 		timer.stop();
 
 		duration = timer.getDuration();
 		sum += duration;
 
-		ht.remove(valueToInsert);
+		ht.insert(-1, -1);
 	}
 
 	averageTime = sum / repetitions;

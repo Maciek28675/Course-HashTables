@@ -18,7 +18,7 @@ public:
       virtual void run();
 };
 
-template <typename T>
+template <typename T1, typename T2>
 class HashTableMenu : public Menu
 {
 protected: 
@@ -60,7 +60,7 @@ void HashTableMenu<T>::display() const
       std::cout<<"Choose one option from the menu:"<<std::endl;
 }
 
-template <typename T>
+template <typename T1, typename T2>
 void HashTableMenu<T>::run()
 {
       while ( userChoice != exitOption)
@@ -72,22 +72,35 @@ void HashTableMenu<T>::run()
               {
                 case 1:
                   {
-                    //creating open adressing hash table
+                    int size;
+                      std::cout << "Enter the size of the hash table: ";
+                      std::cin >> size;
+                      ht = std::make_unique<OpenAddressingTable<T1,T2>>(size);
+                      break;
                   }
 
                 case 2:
                   {
-                    //creating closed adressing hash table
+                    int size;
+                      std::cout << "Enter the size of the hash table: ";
+                      std::cin >> size;
+                      ht = std::make_unique<ClosedAddressingTable<T1,T2>>(size);
+                      break;
                   }
 
                 case 3:
                   {
-                    //creating AVL hash table
+                    ht = std::make_unique<AVL<T1,T2>>();
+                      break;
                   }
 
                 case 4:
                   {
-                    //create cuckoo hash table
+                    int size;
+                      std::cout << "Enter the size of the hash table: ";
+                      std::cin >> size;
+                      ht = std::make_unique<CuckooHashingTable<T1,T2>>(size);
+                      break;
                   }
 
                 case 5:
@@ -215,28 +228,28 @@ void DataTypeMenu::run()
         {
             case 1:
             {
-                HashTableMenu<int> m1;
+                HashTableMenu<int,int> m1;
                 m1.run();
                 break;
             }
           
             case 2:
             {
-                HashTableMenu<float> m2;
+                HashTableMenu<float,float> m2;
                 m2.run();
                 break;
             }
           
             case 3:
             {
-                HashTableMenu<char> m3;
+                HashTableMenu<char,char> m3;
                 m3.run();
                 break;
             }
           
             case 4:
             {
-                HashTableMenu<std::string> m4;
+                HashTableMenu<std::string,string> m4;
                 m4.run();
                 break;
             }

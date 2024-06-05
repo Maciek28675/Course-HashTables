@@ -11,7 +11,21 @@
 
 int main()
 {
-	
+	CuckooHashingTable<int, int> ht(11);
+
+	ht.insert(20, 20);
+	ht.insert(50, 50);
+	ht.insert(53, 53);
+	ht.insert(75, 75);
+	ht.insert(100, 100);
+	ht.insert(67, 67);
+	ht.insert(105, 105);
+	ht.insert(36, 36);
+	ht.insert(3, 3);
+	ht.insert(39, 39);
+
+	ht.display();
+	/*
 	measurePerformance(1000, 10000);
 	measurePerformance(1000, 20000);
 	measurePerformance(1000, 30000);
@@ -32,6 +46,6 @@ int main()
 	measurePerformance(1000, 300000);
 	measurePerformance(1000, 400000);
 	measurePerformance(1000, 500000);
-
+	*/
 	return 0;
 }

@@ -274,13 +274,15 @@ T2 SinglyLinkedList<T1, T2>::getValue(const int& index)
 template  <typename T1, typename T2>
 void SinglyLinkedList<T1, T2>::show() const
 {
-	SinglyNode<T>* current_node = head_;
+	SinglyNode<T1, T2>* current_node = head_;
 
 	while (current_node != nullptr)
 	{
-		std::cout << current_node->value_ << '\n';
+		std::cout << "{ " << current_node->key_ << ", " << current_node->value_ << " } -> ";
 		current_node = current_node->next_;
 	}
+
+	std::cout << '\n';
 }
 
 // Return an index of a first occurence of a specified value. In case of failure return -1

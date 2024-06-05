@@ -12,6 +12,7 @@ template <typename T1, typename T2>
 class ClosedAddressingTable : public HashTable<T1, T2>
 {
 private:
+	// Type definition for key - value buckets
 	typedef SinglyLinkedList<T1, T2> Bucket;
 
 	std::vector<Bucket> bucketArray_;
@@ -31,16 +32,19 @@ public:
 
 	void insert(T1 key, T2 value) override;
 	void remove(T1 key) override;
+	void display();
 
 	size_t calculateLoadFactor();
 };
 
+// Initialize empty table of specified size
 template <typename T1, typename T2>
 ClosedAddressingTable<T1, T2>::ClosedAddressingTable(size_t size) : size_(size), bucketArray_(size), elements_(0), loadFactor_(0.0)
 {
 	// In progress
 }
 
+// Copy constructor
 template <typename T1, typename T2>
 ClosedAddressingTable<T1, T2>::ClosedAddressingTable(const ClosedAddressingTable<T1, T2>& copy)
 {
@@ -54,6 +58,7 @@ ClosedAddressingTable<T1, T2>::~ClosedAddressingTable()
 	// In progress
 }
 
+// Simple division based hash function
 template <typename T1, typename T2>
 size_t ClosedAddressingTable<T1, T2>::hash(int key, int type = 0)
 {
@@ -62,6 +67,7 @@ size_t ClosedAddressingTable<T1, T2>::hash(int key, int type = 0)
 	return hashValue;
 }
 
+// hashing function using std::hash
 template <typename T1, typename T2>
 size_t ClosedAddressingTable<T1, T2>::hash(float key, int type = 0)
 {
@@ -71,6 +77,7 @@ size_t ClosedAddressingTable<T1, T2>::hash(float key, int type = 0)
 	return hashValue;
 }
 
+// Simple division based hash function
 template <typename T1, typename T2>
 size_t ClosedAddressingTable<T1, T2>::hash(char key, int type = 0)
 {
@@ -79,12 +86,13 @@ size_t ClosedAddressingTable<T1, T2>::hash(char key, int type = 0)
 
 	return hashValue;
 }
-
+// Division based hash function
 template <typename T1, typename T2>
 size_t ClosedAddressingTable<T1, T2>::hash(std::string key, int type = 0)
 {
 	int sum = 0;
 
+	// To get an integer value, we multiply every character of string by a large prime number
 	for (int i = 0; i < key.size(); i++)
 		sum += int(key[i]) * pow(31, i);
 
@@ -93,6 +101,7 @@ size_t ClosedAddressingTable<T1, T2>::hash(std::string key, int type = 0)
 	return hashValue;
 }
 
+// Insert key-value pair at a calculated index and handle colission if it occurs
 template <typename T1, typename T2>
 void ClosedAddressingTable<T1, T2>::insert(T1 key, T2 value)
 {
@@ -102,6 +111,7 @@ void ClosedAddressingTable<T1, T2>::insert(T1 key, T2 value)
 	elements_++;
 }
 
+// Find element with specified key and remove it
 template <typename T1, typename T2>
 void ClosedAddressingTable<T1, T2>::remove(T1 key)
 {
@@ -117,4 +127,14 @@ size_t ClosedAddressingTable<T1, T2>::calculateLoadFactor()
 	loadFactor_ = elements_ / size_;
 }
 
+// Display every bucket
+template <typename T1, typename T2>
+void ClosedAddressingTable<T1, T2>::display()
+{
+	for (int i = 0; i < size_; i++)
+	{
+		if(!bucketArray_[i].isEmpty())
+			bucketArray_[i].show();
+	}
+}
 #endif

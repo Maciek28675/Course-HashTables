@@ -238,7 +238,7 @@ size_t CuckooHashingTable<T1, T2>::calculateLoadFactor()
 template <typename T1, typename T2>
 void CuckooHashingTable<T1, T2>::rehash()
 {
-	std::cout << "rehash called\n";
+	//std::cout << "rehash called\n";
 
 	std::vector<Node<T1, T2>> temp1 = array1_;
 	std::vector<Node<T1, T2>> temp2 = array2_;

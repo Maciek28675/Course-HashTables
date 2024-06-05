@@ -11,7 +11,6 @@
 
 int main()
 {
-	
 	measurePerformance(1000, 10000);
 	measurePerformance(1000, 20000);
 	measurePerformance(1000, 30000);

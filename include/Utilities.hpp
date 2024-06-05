@@ -30,7 +30,7 @@ void measurePerformance(int repetitions, int dataSetSize)
 	//Generate values
 	std::vector<int> values = generateIntDataSet(dataSetSize);
 
-	CuckooHashingTable<int, int> ht(dataSetSize);
+	CuckooHashingTable<int, int> ht(dataSetSize * 2);
 
 	for (int i = 0; i < dataSetSize; i++)
 		ht.insert(keys[i], values[i]);
@@ -39,15 +39,15 @@ void measurePerformance(int repetitions, int dataSetSize)
 	double sum = 0.0;
 	double duration = 0.0;
 
-	//srand(time(NULL));
+	srand(time(NULL));
+
 	//int valueToInsert(rand() % 10000);
-	// measure time of operation
 	ht.insert(-1, -1);
+	// measure time of operation
 
 	for (int i = 0; i < repetitions; i++)
 	{
 		Timer timer;
-
 		timer.start();
 		ht.remove(-1);
 		timer.stop();
